@@ -109,6 +109,22 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');
     }
+
+    if ('wakeLock' in navigator) {
+      async function keepScreenOn() {
+        try {
+          await navigator.wakeLock.request('screen');
+        } catch (e) {
+          // Wake lock not supported or permission denied
+        }
+      }
+      keepScreenOn();
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          keepScreenOn();
+        }
+      });
+    }
   </script>
 </body>
 </html>
