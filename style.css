@@ -1,0 +1,95 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f0f0f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Center the clock */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Clock container — scales with viewport */
+.clock-container {
+  width: 95vmin;
+  height: 95vmin;
+  max-width: 800px;
+  max-height: 800px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Mobile phones (320–767px) */
+@media (max-width: 767px) {
+  .clock-container {
+    width: 98vmin;
+    height: 98vmin;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/* Portrait orientation on mobile */
+@media (max-height: 500px) and (orientation: portrait) {
+  .clock-container {
+    width: 95vmin;
+    height: 95vmin;
+  }
+}
+
+/* Tablets (768–1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .clock-container {
+    width: 90vmin;
+    height: 90vmin;
+    max-width: 700px;
+    max-height: 700px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .clock-container {
+    width: 90vmin;
+    height: 90vmin;
+    max-width: 800px;
+    max-height: 800px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1600px) {
+  .clock-container {
+    max-width: 900px;
+    max-height: 900px;
+  }
+}
+
+/* CSS animation for rotating hands */
+#hands {
+  transform-origin: 250px 250px;
+  animation: rotate-clock 60s linear infinite;
+}
+
+@keyframes rotate-clock {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
