@@ -105,25 +105,53 @@
       <circle cx="250" cy="250" r="3" fill="#FFFFFF"/>
     </svg>
   </div>
+
+  <div id="status-bar">
+    <div id="status-indicator"></div>
+    <span id="status-text">Проверка...</span>
+  </div>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');
     }
 
+    const statusBar = document.getElementById('status-bar');
+    const statusIndicator = document.getElementById('status-indicator');
+    const statusText = document.getElementById('status-text');
+
+    function setStatus(active) {
+      if (active) {
+        statusIndicator.style.backgroundColor = '#4CAF50';
+        statusText.textContent = 'Wake Lock: активен';
+      } else {
+        statusIndicator.style.backgroundColor = '#F44336';
+        statusText.textContent = 'Wake Lock: неактивен';
+      }
+    }
+
     if ('wakeLock' in navigator) {
+      let wakeLock = null;
+
       async function keepScreenOn() {
         try {
-          await navigator.wakeLock.request('screen');
+          wakeLock = await navigator.wakeLock.request('screen');
+          setStatus(true);
+          wakeLock.addEventListener('release', () => setStatus(false));
         } catch (e) {
-          // Wake lock not supported or permission denied
+          setStatus(false);
         }
       }
+
       keepScreenOn();
+
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
           keepScreenOn();
         }
       });
+    } else {
+      setStatus(false);
     }
   </script>
 </body>
